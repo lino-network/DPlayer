@@ -14,7 +14,7 @@
     "dist"
   ],
   "repository": {
-    "url": "git+https://github.com/DIYgod/DPlayer.git",
+    "url": "git+ssh://git@github.com/lino-network/DPlayer.git",
     "type": "git"
   },
   "keywords": [
@@ -26,7 +26,7 @@
   "author": "DIYgod",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/DIYgod/DPlayer/issues"
+    "url": "https://github.com/lino-network/DPlayer/issues"
   },
   "homepage": "https://github.com/DIYgod/DPlayer#readme",
   "devDependencies": {

@@ -53,6 +53,16 @@ export default (options) => {
                 player.infoPanel.triggle();
             }
         },
+    ]);
+
+    /*
+    options.contextmenu = options.contextmenu.concat([
+        {
+            text: 'Video info',
+            click: (player) => {
+                player.infoPanel.triggle();
+            }
+        },
         {
             text: 'About author',
             link: 'https://diygod.me'
@@ -62,6 +72,7 @@ export default (options) => {
             link: 'https://github.com/MoePlayer/DPlayer'
         }
     ]);
+    */
 
     return options;
 };
