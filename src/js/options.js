@@ -18,7 +18,8 @@ export default (options) => {
         apiBackend: defaultApiBackend,
         video: {},
         contextmenu: [],
-        mutex: true
+        mutex: true,
+        showProgressBar: false,
     };
     for (const defaultKey in defaultOption) {
         if (defaultOption.hasOwnProperty(defaultKey) && !options.hasOwnProperty(defaultKey)) {
