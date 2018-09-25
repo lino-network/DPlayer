@@ -20,7 +20,7 @@ export default (options) => {
         contextmenu: [],
         mutex: true,
         showProgressBar: true,
-        showSettingBtn: false,
+        showSettingBtn: true,
     };
     for (const defaultKey in defaultOption) {
         if (defaultOption.hasOwnProperty(defaultKey) && !options.hasOwnProperty(defaultKey)) {
