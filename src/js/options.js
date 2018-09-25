@@ -19,7 +19,8 @@ export default (options) => {
         video: {},
         contextmenu: [],
         mutex: true,
-        showProgressBar: false,
+        showProgressBar: true,
+        showSettingBtn: false,
     };
     for (const defaultKey in defaultOption) {
         if (defaultOption.hasOwnProperty(defaultKey) && !options.hasOwnProperty(defaultKey)) {

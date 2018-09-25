@@ -127,7 +127,11 @@
             </button>
         </div>
         {{ /if }}
-        <div class="dplayer-setting">
+        <div class="dplayer-setting"
+        {{ if !options.showSettingBtn }}
+        style="display:none"
+        {{ /if }}
+        >
             <button class="dplayer-icon dplayer-setting-icon" data-balloon="{{ tran('Setting') }}" data-balloon-pos="up">
                 <span class="dplayer-icon-content">{{@ icons.setting }}</span>
             </button>
