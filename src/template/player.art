@@ -9,6 +9,8 @@
     <div class="dplayer-danmaku"{{ if options.danmaku && options.danmaku.bottm }} style="margin-bottom:{{ options.danmaku.bottm }}"{{ /if }}>
         <div class="dplayer-danmaku-item dplayer-danmaku-item--demo"></div>
     </div>
+    <div class="dplayer-gifts">
+    </div>
     <div class="dplayer-subtitle"></div>
     <div class="dplayer-bezel">
         <span class="dplayer-bezel-icon"></span>

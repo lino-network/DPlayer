@@ -37,6 +37,7 @@ class Template {
         this.playedBarWrap = this.container.querySelector('.dplayer-bar-wrap');
         this.playedBarTime = this.container.querySelector('.dplayer-bar-time');
         this.danmaku = this.container.querySelector('.dplayer-danmaku');
+        this.gifts = this.container.querySelector('.dplayer-gifts');
         this.danmakuLoading = this.container.querySelector('.dplayer-danloading');
         this.video = this.container.querySelector('.dplayer-video-current');
         this.bezel = this.container.querySelector('.dplayer-bezel-icon');

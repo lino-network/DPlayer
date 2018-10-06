@@ -67,6 +67,7 @@ class DPlayer {
         });
 
         this.video = this.template.video;
+        this.gifts = this.template.gifts;
 
         this.bar = new Bar(this.template);
 
