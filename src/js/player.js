@@ -253,6 +253,9 @@ class DPlayer {
             this.video.volume = percentage;
             if (this.video.muted) {
                 this.video.muted = false;
+                if (!nostorage) {
+                    this.user.set('muted', false);
+                }
             }
             this.switchVolumeIcon();
         }
@@ -486,6 +489,7 @@ class DPlayer {
         }
 
         this.volume(this.user.get('volume'), true, true);
+        video.muted = this.user.get('muted');
 
         if (this.options.subtitle) {
             this.subtitle = new Subtitle(this.template.subtitle, this.video, this.options.subtitle, this.events);

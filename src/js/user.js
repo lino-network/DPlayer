@@ -5,6 +5,7 @@ class User {
         this.storageName = {
             opacity: 'dplayer-danmaku-opacity',
             volume: 'dplayer-volume',
+            muted: 'dplayer-muted',
             unlimited: 'dplayer-danmaku-unlimited',
             danmaku: 'dplayer-danmaku-show',
             subtitle: 'dplayer-subtitle-show'
@@ -12,6 +13,7 @@ class User {
         this.default = {
             opacity: 0.7,
             volume: player.options.hasOwnProperty('volume') ? player.options.volume : 0.7,
+            muted: false,
             unlimited: (player.options.danmaku && player.options.danmaku.unlimited ? 1 : 0) || 0,
             danmaku: 1,
             subtitle: 1

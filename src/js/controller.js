@@ -196,11 +196,15 @@ class Controller {
         this.player.template.volumeButtonIcon.addEventListener('click', () => {
             if (this.player.video.muted) {
                 this.player.video.muted = false;
+                // TODO(yumin): add nostore option.
+                this.player.user.set('muted', false);
                 this.player.switchVolumeIcon();
                 this.player.bar.set('volume', this.player.volume(), 'width');
             }
             else {
                 this.player.video.muted = true;
+                // TODO(yumin): add nostore option.
+                this.player.user.set('muted', true);
                 this.player.template.volumeIcon.innerHTML = Icons.volumeOff;
                 this.player.bar.set('volume', 0, 'width');
             }
