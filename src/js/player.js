@@ -489,7 +489,11 @@ class DPlayer {
         }
 
         this.volume(this.user.get('volume'), true, true);
-        video.muted = this.user.get('muted');
+        if (this.user.get('muted') === true) {
+            video.muted = true;
+            this.template.volumeIcon.innerHTML = Icons.volumeOff;
+            this.bar.set('volume', 0, 'width');
+        }
 
         if (this.options.subtitle) {
             this.subtitle = new Subtitle(this.template.subtitle, this.video, this.options.subtitle, this.events);

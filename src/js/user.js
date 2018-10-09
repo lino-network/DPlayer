@@ -26,7 +26,12 @@ class User {
     init () {
         for (const item in this.storageName) {
             const name = this.storageName[item];
-            this.data[item] = parseFloat(utils.storage.get(name) || this.default[item]);
+            // muted is special, it is not a float.
+            if (item === 'muted') {
+                this.data[item] = utils.storage.get(name) === 'true' || this.default[item];
+            } else {
+                this.data[item] = parseFloat(utils.storage.get(name) || this.default[item]);
+            }
         }
     }
 
