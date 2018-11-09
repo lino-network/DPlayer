@@ -360,6 +360,17 @@ class DPlayer {
                 }
                 break;
 
+            // hls instance is held by parent(p = portable), support quality switching.
+            // user need to pass in hls levels in options.
+            case 'hls-p':
+                if (this.options.video.hls) {
+                    const hls_instance = this.options.video.hls;
+                    hls_instance.attachMedia(this.video);
+                } else {
+                    this.notice('Error: hls-p mode requires video.hls to be the hls instance.');
+                }
+                break;
+
             // https://github.com/Bilibili/flv.js
             case 'flv':
                 if (flvjs && flvjs.isSupported()) {
@@ -504,15 +515,61 @@ class DPlayer {
     }
 
     switchQuality (index) {
-        if (this.qualityIndex === index || this.switchingQuality) {
+        // sometimes index is string instead of number, use == on purpose here.
+        if (this.qualityIndex == index || this.switchingQuality) {
             return;
         }
         else {
             this.qualityIndex = index;
         }
         this.switchingQuality = true;
+        const oldQuality = this.quality;
         this.quality = this.options.video.quality[index];
         this.template.qualityButton.innerHTML = this.quality.name;
+
+        // hls-p quality switching use hls.js's quality switching.
+        // the dirty magic going on here is that.. hls levels
+        // are stored in url in string, as hlsjs convention, -1 = auto.
+        if (this.options.video.type === 'hls-p') {
+            const hls = this.options.video.hls;
+            const HlsType = this.options.video.hlsType;
+            this.notice(`${this.tran('Switching to')} ${this.quality.name} ${this.tran('quality')}`, -1);
+            this.events.trigger('quality_start', this.quality);
+            const switchSuccCb = (event, data) => {
+                this.notice(`${this.tran('Switched to')} ${this.quality.name} ${this.tran('quality')}`);
+                this.switchingQuality = false;
+                this.events.trigger('quality_end');
+            };
+            const switchFailedCb = (event, data) => {
+                this.notice(`${this.tran('Failed to switched to')} ${this.quality.name} ${this.tran('quality')}`);
+                this.switchingQuality = false;
+                this.events.trigger('quality_end');
+                // reset to previous.
+                this.quality = oldQuality;
+                this.template.qualityButton.innerHTML = oldQuality.name;
+            };
+            const timeoutCb = () => {
+                hls.off(HlsType.Events.LEVEL_SWITCHED, switchSuccCb);
+                hls.off(HlsType.ErrorDetails.LEVEL_SWITCH_ERROR, switchFailedCb);
+            };
+            // start switching.
+            const targetLevel = parseInt(this.quality.url);
+            if (hls.currentLevel == targetLevel) {
+                switchSuccCb(null, null);
+            } else if(targetLevel === -1) {
+                // we assume switch to it auto always success to avoid
+                // a cornor case: switch to same level won't fire LEVEL_SWITCHED event.
+                hls.currentLevel = targetLevel;
+                switchSuccCb(null, null);
+            } else {
+                hls.once(HlsType.Events.LEVEL_SWITCHED, switchSuccCb);
+                hls.once(HlsType.ErrorDetails.LEVEL_SWITCH_ERROR, switchFailedCb);
+                // release resource after 2 minutes.
+                setTimeout(timeoutCb, 120 * 1000);
+                hls.currentLevel = targetLevel;
+            }
+            return;
+        }
 
         const paused = this.video.paused;
         this.video.pause();
