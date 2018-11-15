@@ -22,7 +22,7 @@ class Template {
                 screenshot: this.options.screenshot,
                 preload: this.options.preload,
                 url: this.options.video.url,
-                subtitle: this.options.subtitle
+                subtitle: this.options.subtitle,
             }
         });
 

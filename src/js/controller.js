@@ -30,9 +30,7 @@ class Controller {
         this.initScreenshotButton();
         this.initSubtitleButton();
         this.initHighlights();
-        if (!utils.isMobile) {
-            this.initVolumeButton();
-        }
+        this.initVolumeButton();
     }
 
     initPlayButton () {
@@ -200,6 +198,9 @@ class Controller {
                 this.player.user.set('muted', false);
                 this.player.switchVolumeIcon();
                 this.player.bar.set('volume', this.player.volume(), 'width');
+                if (utils.isMobile) {
+                    this.player.volume(1, false, true);
+                }
             }
             else {
                 this.player.video.muted = true;

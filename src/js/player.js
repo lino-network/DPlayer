@@ -136,7 +136,13 @@ class DPlayer {
         this.infoPanel = new InfoPanel(this);
 
         if (!this.danmaku && this.options.autoplay) {
-            this.play();
+            if (this.type === 'hls') {
+                this.video.addEventListener('loadedmetadata', () => {
+                    this.video.play();
+                });
+            } else {
+                this.play();
+            }
         }
 
         index++;
@@ -250,13 +256,16 @@ class DPlayer {
                 this.notice(`${this.tran('Volume')} ${(percentage * 100).toFixed(0)}%`);
             }
 
-            this.video.volume = percentage;
-            if (this.video.muted) {
+            // XXX(yumin): need to unmute before setting volume.
+            if (this.video.muted && percentage > 0) {
                 this.video.muted = false;
                 if (!nostorage) {
                     this.user.set('muted', false);
                 }
             }
+
+            // set volume
+            this.video.volume = percentage;
             this.switchVolumeIcon();
         }
 
@@ -499,13 +508,19 @@ class DPlayer {
             });
         }
 
-        this.volume(this.user.get('volume'), true, true);
-        if (this.user.get('muted') === true) {
-            video.muted = true;
-            this.template.volumeIcon.innerHTML = Icons.volumeOff;
+        if (this.options.nativeMute) {
             this.bar.set('volume', 0, 'width');
+            this.template.volumeIcon.innerHTML = Icons.volumeOff;
+            this.video.muted = true;
+            this.notice('muted');
+        } else {
+            this.volume(this.user.get('volume'), true, true);
+            if (this.user.get('muted') === true) {
+                this.video.muted = true;
+                this.template.volumeIcon.innerHTML = Icons.volumeOff;
+                this.bar.set('volume', 0, 'width');
+            }
         }
-
         if (this.options.subtitle) {
             this.subtitle = new Subtitle(this.template.subtitle, this.video, this.options.subtitle, this.events);
             if (!this.user.get('subtitle')) {
@@ -556,7 +571,7 @@ class DPlayer {
             const targetLevel = parseInt(this.quality.url);
             if (hls.currentLevel == targetLevel) {
                 switchSuccCb(null, null);
-            } else if(targetLevel === -1) {
+            } else if (targetLevel === -1) {
                 // we assume switch to it auto always success to avoid
                 // a cornor case: switch to same level won't fire LEVEL_SWITCHED event.
                 hls.currentLevel = targetLevel;
@@ -579,7 +594,7 @@ class DPlayer {
             screenshot: this.options.screenshot,
             preload: 'auto',
             url: this.quality.url,
-            subtitle: this.options.subtitle
+            subtitle: this.options.subtitle,
         });
         const videoEle = new DOMParser().parseFromString(videoHTML, 'text/html').body.firstChild;
         this.template.videoWrap.insertBefore(videoEle, this.template.videoWrap.getElementsByTagName('div')[0]);

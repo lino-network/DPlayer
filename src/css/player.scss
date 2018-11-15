@@ -164,8 +164,15 @@
         height: 100%;
     }
     &.dplayer-mobile {
+        .dplayer-live-badge {
+          display: none;
+        }
         .dplayer-controller .dplayer-icons {
-            .dplayer-volume,
+            // XXX(yumin): display volume icon only.
+            // .dplayer-volume,
+            .dplayer-volume-bar-wrap {
+              display: none;
+            }
             .dplayer-camera-icon {
                 display: none;
             }

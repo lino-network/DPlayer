@@ -21,6 +21,7 @@ export default (options) => {
         mutex: true,
         showProgressBar: true,
         showSettingBtn: true,
+        nativeMute: false,
     };
     for (const defaultKey in defaultOption) {
         if (defaultOption.hasOwnProperty(defaultKey) && !options.hasOwnProperty(defaultKey)) {
