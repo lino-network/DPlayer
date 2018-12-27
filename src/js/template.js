@@ -60,6 +60,8 @@ class Template {
         this.danmakuOpacityBarWrap = this.container.querySelector('.dplayer-danmaku-bar');
         this.danmakuOpacityBarWrapWrap = this.container.querySelector('.dplayer-danmaku-bar-wrap');
         this.danmakuOpacityBox = this.container.querySelector('.dplayer-setting-danmaku');
+        this.simpleDanmakuToggle = this.container.querySelector('.dplayer-simple-danmaku-toggle-icon');
+        this.simpleDanmakuToggleInner = this.container.querySelector('.dplayer-simple-danmaku-toggle-icon .dplayer-icon-content');
         this.dtime = this.container.querySelector('.dplayer-dtime');
         this.controller = this.container.querySelector('.dplayer-controller');
         this.commentInput = this.container.querySelector('.dplayer-comment-input');

@@ -22,6 +22,7 @@ export default (options) => {
         showProgressBar: true,
         showSettingBtn: true,
         nativeMute: false,
+        simpleDanmaku: false,
     };
     for (const defaultKey in defaultOption) {
         if (defaultOption.hasOwnProperty(defaultKey) && !options.hasOwnProperty(defaultKey)) {

@@ -48,6 +48,25 @@
         }
     }
 
+    &.dplayer-simple-danmaku {
+        .dplayer-controller .dplayer-icons .dplayer-setting .dplayer-setting-box {
+            .dplayer-setting-showdan,
+            .dplayer-setting-danmaku,
+            .dplayer-setting-danunlimit {
+                display: none;
+            }
+        }
+
+        .dplayer-controller .dplayer-icons .dplayer-comment {
+            display: none;
+        }
+
+        .dplayer-danmaku {
+            display: none;
+        }
+
+    }
+
     &.dplayer-no-danmaku {
         .dplayer-controller .dplayer-icons .dplayer-setting .dplayer-setting-box {
             .dplayer-setting-showdan,
@@ -58,6 +77,10 @@
         }
 
         .dplayer-controller .dplayer-icons .dplayer-comment {
+            display: none;
+        }
+
+        .dplayer-controller .dplayer-icons .dplayer-danmaku-toggle {
             display: none;
         }
 

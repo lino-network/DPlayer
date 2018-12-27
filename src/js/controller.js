@@ -31,6 +31,7 @@ class Controller {
         this.initSubtitleButton();
         this.initHighlights();
         this.initVolumeButton();
+        this.initSimpleDanmaku();
     }
 
     initPlayButton () {
@@ -246,6 +247,38 @@ class Controller {
                 this.player.events.trigger('screenshot', dataURL);
             });
         }
+    }
+
+    initSimpleDanmaku () {
+        if (!this.player.options.simpleDanmaku) {
+            return;
+        }
+        const doHideDanmaku = () => {
+            this.player.template.simpleDanmakuToggle.dataset.balloon = this.player.tran('Show Danmaku');
+            this.player.template.simpleDanmakuToggleInner.style.opacity = '0.4';
+            this.player.danmaku.hide();
+        };
+        const doShowDanmaku = () => {
+            this.player.template.simpleDanmakuToggle.dataset.balloon = this.player.tran('Hide Danmaku');
+            this.player.template.simpleDanmakuToggleInner.style.opacity = '';
+            this.player.danmaku.show();
+        };
+        const showDanmaku = this.player.user.get('danmaku');
+        console.log(showDanmaku);
+        if (!showDanmaku) {
+            this.player.template.simpleDanmakuToggle.dataset.balloon = this.player.tran('Show Danmaku');
+            this.player.template.simpleDanmakuToggleInner.style.opacity = '0.4';
+            // XXX(yumin): do not need to set player.danmaku status, it will read from local itself.
+        }
+        this.player.template.simpleDanmakuToggle.addEventListener('click', () => {
+            const showDanmaku = this.player.user.get('danmaku');
+            if (showDanmaku) {
+                doHideDanmaku();
+            } else {
+                doShowDanmaku();
+            }
+            this.player.user.set('danmaku', !showDanmaku ? 1 : 0);
+        });
     }
 
     initSubtitleButton () {

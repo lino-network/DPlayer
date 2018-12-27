@@ -14,7 +14,7 @@
     <div class="dplayer-subtitle"></div>
     <div class="dplayer-bezel">
         <span class="dplayer-bezel-icon"></span>
-        {{ if options.danmaku }}
+        {{ if options.danmaku && !options.live }}
         <span class="dplayer-danloading">{{ tran('Danmaku is loading') }}</span>
         {{ /if }}
         <span class="diplayer-loading-icon">{{@ icons.loading }}</span>
@@ -117,11 +117,22 @@
             <span class="dplayer-icon-content">{{@ icons.camera }}</span>
         </div>
         {{ /if }}
+
+        {{ if options.simpleDanmaku }}
+        <div class="dplayer-simple-danmaku-toggle-btn">
+            <button class="dplayer-icon dplayer-simple-danmaku-toggle-icon"
+              data-balloon="{{ tran('Hide Danmaku') }}" data-balloon-pos="up">
+                <span class="dplayer-icon-content">{{@ icons.subtitle }}</span>
+            </button>
+        </div>
+        {{ /if }}
+
         <div class="dplayer-comment">
             <button class="dplayer-icon dplayer-comment-icon" data-balloon="{{ tran('Send danmaku') }}" data-balloon-pos="up">
                 <span class="dplayer-icon-content">{{@ icons.comment }}</span>
             </button>
         </div>
+
         {{ if options.subtitle }}
         <div class="dplayer-subtitle-btn">
             <button class="dplayer-icon dplayer-subtitle-icon" data-balloon="{{ tran('Hide subtitle') }}" data-balloon-pos="up">

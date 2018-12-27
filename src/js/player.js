@@ -6,6 +6,7 @@ import i18n from './i18n';
 import Template from './template';
 import Icons from './icons';
 import Danmaku from './danmaku';
+import LiveDanmaku from './livedanmaku';
 import Events from './events';
 import FullScreen from './fullscreen';
 import User from './user';
@@ -48,6 +49,9 @@ class DPlayer {
         if (!this.options.danmaku) {
             this.container.classList.add('dplayer-no-danmaku');
         }
+        if (this.options.danmaku && this.options.simpleDanmaku) {
+            this.container.classList.add('dplayer-simple-danmaku');
+        }
         if (this.options.live) {
             this.container.classList.add('dplayer-live');
         }
@@ -78,39 +82,62 @@ class DPlayer {
         this.controller = new Controller(this);
 
         if (this.options.danmaku) {
-            this.danmaku = new Danmaku({
-                container: this.template.danmaku,
-                opacity: this.user.get('opacity'),
-                callback: () => {
-                    setTimeout(() => {
-                        this.template.danmakuLoading.style.display = 'none';
+            if (this.options.live) {
+                this.danmaku = new LiveDanmaku({
+                    container: this.template.danmaku,
+                    opacity: this.user.get('opacity'),
+                    show: this.user.get('danmaku'),
+                    callback: () => {
+                        setTimeout(() => {
+                            // autoplay
+                            if (this.options.autoplay) {
+                                this.play();
+                            }
+                        }, 0);
+                    },
+                    error: (msg) => {
+                        this.notice(msg);
+                    },
+                    borderColor: this.options.theme,
+                    height: this.arrow ? 24 : 30,
+                    unlimited: this.user.get('unlimited'),
+                    events: this.events,
+                    tran: (msg) => this.tran(msg),
+                });
+            } else {
+                this.danmaku = new Danmaku({
+                    container: this.template.danmaku,
+                    opacity: this.user.get('opacity'),
+                    callback: () => {
+                        setTimeout(() => {
+                            this.template.danmakuLoading.style.display = 'none';
 
-                        // autoplay
-                        if (this.options.autoplay) {
-                            this.play();
-                        }
-                    }, 0);
-                },
-                error: (msg) => {
-                    this.notice(msg);
-                },
-                apiBackend: this.options.apiBackend,
-                borderColor: this.options.theme,
-                height: this.arrow ? 24 : 30,
-                time: () => this.video.currentTime,
-                unlimited: this.user.get('unlimited'),
-                api: {
-                    id: this.options.danmaku.id,
-                    address: this.options.danmaku.api,
-                    token: this.options.danmaku.token,
-                    maximum: this.options.danmaku.maximum,
-                    addition: this.options.danmaku.addition,
-                    user: this.options.danmaku.user,
-                },
-                events: this.events,
-                tran: (msg) => this.tran(msg),
-            });
-
+                            // autoplay
+                            if (this.options.autoplay) {
+                                this.play();
+                            }
+                        }, 0);
+                    },
+                    error: (msg) => {
+                        this.notice(msg);
+                    },
+                    apiBackend: this.options.apiBackend,
+                    borderColor: this.options.theme,
+                    height: this.arrow ? 24 : 30,
+                    time: () => this.video.currentTime,
+                    unlimited: this.user.get('unlimited'),
+                    api: {
+                        id: this.options.danmaku.id,
+                        address: this.options.danmaku.api,
+                        token: this.options.danmaku.token,
+                        maximum: this.options.danmaku.maximum,
+                        addition: this.options.danmaku.addition,
+                        user: this.options.danmaku.user,
+                    },
+                    events: this.events,
+                    tran: (msg) => this.tran(msg),
+                });
+            }
             this.comment = new Comment(this);
         }
 

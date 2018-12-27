@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>DPlayer Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css">
+    <link rel="stylesheet" href="demo.css">
+    <script src="https://cdn.jsdelivr.net/npm/hls.js/dist/hls.min.js"></script>
+    <script src="DPlayer.js"></script>
+</head>
+
+<body class="markdown-body">
+
+    <h2 id="simple">Simple Danmaku</h2>
+    <div class="example">
+        <div id="dplayer-simple"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/stats.js"></script>
+    <script>
+    window.dp1 = new DPlayer({
+        container: document.getElementById('dplayer-simple'),
+        live: true,
+        danmaku: true,
+        simpleDanmaku: true,
+        showSettingBtn: false,
+    });
+
+    </script>
+</body>
+
+</html>
