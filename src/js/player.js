@@ -557,8 +557,8 @@ class DPlayer {
     }
 
     switchQuality (index) {
-        // sometimes index is string instead of number, use == on purpose here.
-        if (this.qualityIndex == index || this.switchingQuality) {
+        index = typeof index === 'string' ? parseInt(index) : index;
+        if (this.qualityIndex === index || this.switchingQuality) {
             return;
         }
         else {
@@ -596,7 +596,7 @@ class DPlayer {
             };
             // start switching.
             const targetLevel = parseInt(this.quality.url);
-            if (hls.currentLevel == targetLevel) {
+            if (hls.currentLevel === targetLevel) {
                 switchSuccCb(null, null);
             } else if (targetLevel === -1) {
                 // we assume switch to it auto always success to avoid

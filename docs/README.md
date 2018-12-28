@@ -8,8 +8,14 @@ search: english
 
 ## Special Sponsors
 
-<a href="https://pear.hk/" target="_blank">
-    <img width="222px" src="https://i.imgur.com/5qQYmfc.png">
+<a href="http://www.polyv.net/" target="_blank">
+    <img width="600px" src="https://i.imgur.com/d4XabAe.png">
+</a>
+
+## Sponsors
+
+<a href="https://www.dogecloud.com/?ref=dplayer" target="_blank">
+    <img width="222px" src="https://i.imgur.com/BBKXPAp.png">
 </a>
 <a href="https://console.upyun.com/register/?invite=BkLZ2Xqob" target="_blank">
     <img width="222px" src="https://imgur.com/apG1uKf.png">
@@ -345,6 +351,8 @@ Player events
 - resize
 - fullscreen
 - fullscreen_cancel
+- webfullscreen
+- webfullscreen_cancel
 - subtitle_show
 - subtitle_hide
 - subtitle_change
