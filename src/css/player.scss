@@ -44,6 +44,12 @@
                     animation: danmaku 8s linear;
                     animation-play-state: inherit;
                 }
+                @for $i from 6 through 15 {
+                  .dplayer-danmaku-move-#{$i}s {
+                    animation: danmaku #{$i}s linear;
+                    animation-play-state: inherit;
+                  }
+                }
             }
         }
     }
@@ -120,6 +126,14 @@
             animation-play-state: running;
         }
 
+        .dplayer-danmaku {
+            @for $i from 6 through 15 {
+                .dplayer-danmaku-move-#{$i}s {
+                  animation-play-state: running;
+                }
+            }
+        }
+
         @media (min-width: 900px) {
             .dplayer-controller-mask {
                 opacity: 0;
@@ -150,6 +164,12 @@
         .dplayer-danmaku,
         .dplayer-danmaku-move {
             animation-play-state: paused;
+        }
+        @for $i from 6 through 15 {
+            .dplayer-danmaku,
+            .dplayer-danmaku-move-#{$i}s {
+                animation-play-state: paused;
+            }
         }
     }
 

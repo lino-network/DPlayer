@@ -27,6 +27,13 @@
             animation: danmaku 5s linear;
             animation-play-state: paused;
         }
+        @for $i from 6 through 15 {
+          &.dplayer-danmaku-move-#{$i}s {
+            will-change: transform;
+            animation: danmaku #{$i}s linear;
+            animation-play-state: paused;
+          }
+        }
     }
     @keyframes danmaku {
         from {

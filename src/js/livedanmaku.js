@@ -17,6 +17,7 @@ class LiveDanmaku {
         this.events = this.options.events;
         this.unlimited = this.options.unlimited;
         this._measure('');
+        this.speed = 5; // default speed
 
         this.options.callback();
     }
@@ -183,7 +184,11 @@ class LiveDanmaku {
 
                 if (tunnel >= 0) {
                     // move
-                    item.classList.add('dplayer-danmaku-move');
+                    if (this.speed >= 6 && this.speed <= 15) {
+                        item.classList.add(`dplayer-danmaku-move-${this.speed}s`);
+                    } else {
+                        item.classList.add('dplayer-danmaku-move');
+                    }
 
                     // insert
                     docFragment.appendChild(item);
