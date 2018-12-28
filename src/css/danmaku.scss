@@ -12,7 +12,8 @@
         user-select: none;
         cursor: default;
         white-space: nowrap;
-        text-shadow: .5px .5px .5px rgba(0, 0, 0, .5);
+        // text-shadow: .5px .5px .5px rgba(0, 0, 0, .5);
+        text-shadow: #000 0 0 1px, #000 0 0 1px, #000 0 0 1px;
         &--demo {
             position: absolute;
             visibility: hidden;

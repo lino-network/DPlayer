@@ -18,6 +18,7 @@ class LiveDanmaku {
         this.unlimited = this.options.unlimited;
         this._measure('');
         this.speed = 5; // default speed
+        this.topMargin = 5;
 
         this.options.callback();
     }
@@ -162,7 +163,7 @@ class LiveDanmaku {
                     tunnel = getTunnel(item, dan[i].type, itemWidth);
                     if (tunnel >= 0) {
                         item.style.width = itemWidth + 1 + 'px';
-                        item.style.top = itemHeight * tunnel + 'px';
+                        item.style.top = this.topMargin + itemHeight * tunnel + 'px';
                         item.style.transform = `translateX(-${danWidth}px)`;
                     }
                     break;
