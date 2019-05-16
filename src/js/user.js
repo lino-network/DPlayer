@@ -15,7 +15,7 @@ class User {
             volume: player.options.hasOwnProperty('volume') ? player.options.volume : 0.7,
             muted: false,
             unlimited: (player.options.danmaku && player.options.danmaku.unlimited ? 1 : 0) || 0,
-            danmaku: 1,
+            danmaku: 0,
             subtitle: 1
         };
         this.data = {};
