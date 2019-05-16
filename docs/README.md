@@ -8,8 +8,12 @@ search: english
 
 ## Special Sponsors
 
-<a href="http://www.polyv.net/" target="_blank">
+<a href="https://www.polyv.net/?f=git_DPlayer-20190212-01" target="_blank">
     <img width="600px" src="https://i.imgur.com/d4XabAe.png">
+</a>
+
+<a href="https://www.9ccms.net" target="_blank">
+    <img width="330px" src="https://i.imgur.com/YBV6kfb.png">
 </a>
 
 ## Sponsors
@@ -69,8 +73,8 @@ const dp = new DPlayer({
 Work with module bundler:
 
 ```js
-import 'DPlayer/dist/DPlayer.min.css';
-import DPlayer from 'DPlayer';
+import 'dplayer/dist/DPlayer.min.css';
+import DPlayer from 'dplayer';
 
 const dp = new DPlayer(options);
 ```
