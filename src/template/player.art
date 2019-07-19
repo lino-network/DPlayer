@@ -91,7 +91,11 @@
                 </div>
             </div>
         </div>
-        <span class="dplayer-time">
+        <span class="dplayer-time"
+        {{ if !options.showProgressBar }}
+          style="display:none"
+        {{ /if }}
+        >
             <span class="dplayer-ptime">0:00</span> /
             <span class="dplayer-dtime">0:00</span>
         </span>
