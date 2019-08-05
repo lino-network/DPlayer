@@ -601,14 +601,14 @@ class DPlayer {
             } else if (targetLevel === -1) {
                 // we assume switch to it auto always success to avoid
                 // a cornor case: switch to same level won't fire LEVEL_SWITCHED event.
-                hls.currentLevel = targetLevel;
+                hls.nextLevel = targetLevel;
                 switchSuccCb(null, null);
             } else {
                 hls.once(HlsType.Events.LEVEL_SWITCHED, switchSuccCb);
                 hls.once(HlsType.ErrorDetails.LEVEL_SWITCH_ERROR, switchFailedCb);
                 // release resource after 2 minutes.
                 setTimeout(timeoutCb, 120 * 1000);
-                hls.currentLevel = targetLevel;
+                hls.nextLevel = targetLevel;
             }
             return;
         }
