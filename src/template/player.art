@@ -104,6 +104,15 @@
         {{ /if }}
     </div>
     <div class="dplayer-icons dplayer-icons-right">
+        {{ if options.clip }}
+        <div class="dplayer-clip-btn">
+            <button class="dplayer-icon dplayer-clip-icon"
+              data-balloon="{{ tran('clip') }}" data-balloon-pos="up">
+                <span class="dplayer-icon-content">{{@ icons.clip }}</span>
+            </button>
+        </div>
+        {{ /if }}
+
         {{ if options.simpleDanmaku }}
         <div class="dplayer-simple-danmaku-toggle-btn">
             <button class="dplayer-icon dplayer-simple-danmaku-toggle-icon"
@@ -212,6 +221,14 @@
                 </div>
             </div>
         </div>
+        {{ if options.theater }}
+        <div class="dplayer-theater-btn">
+            <button class="dplayer-icon dplayer-theater-icon"
+              data-balloon="{{ tran('theater') }}" data-balloon-pos="up">
+                <span class="dplayer-icon-content">{{@ icons.theater }}</span>
+            </button>
+        </div>
+        {{ /if }}
         <div class="dplayer-full">
             <button class="dplayer-icon dplayer-full-icon" data-balloon="{{ tran('Full screen') }}" data-balloon-pos="up">
                 <span class="dplayer-icon-content">{{@ icons.full }}</span>

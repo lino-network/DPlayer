@@ -19,7 +19,8 @@ class Events {
             'destroy',
             'resize',
             'fullscreen', 'fullscreen_cancel', 'webfullscreen', 'webfullscreen_cancel',
-            'subtitle_show', 'subtitle_hide', 'subtitle_change'
+            'subtitle_show', 'subtitle_hide', 'subtitle_change',
+            'clip', 'theater_toggle'
         ];
     }
 

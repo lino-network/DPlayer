@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="16" viewBox="0 0 20 16">
+    <defs>
+        <style>
+            .cls-1{opacity:.8}.cls-2,.cls-3,.cls-4{fill:none}.cls-3,.cls-4{stroke:#fff}.cls-3{stroke-width:1.5px}.cls-5{fill:#fff;fill-rule:evenodd}
+        </style>
+    </defs>
+    <g id="组_20256" class="cls-1" data-name="组 20256" transform="translate(-941 -573)">
+        <rect id="矩形_2894" width="20" height="16" class="cls-2" data-name="矩形 2894" rx="2" transform="translate(941 573)"/>
+        <rect id="矩形_2895" width="18.5" height="14.5" class="cls-3" data-name="矩形 2895" rx="1.25" transform="translate(941.75 573.75)"/>
+        <path id="直线_46" d="M0 0v14.5" class="cls-3" data-name="直线 46" transform="translate(955.561 573.75)"/>
+        <path id="直线_47" d="M0 0h4.146" class="cls-4" data-name="直线 47" transform="translate(956.104 577.643)"/>
+        <path id="直线_48" d="M0 0h4.146" class="cls-4" data-name="直线 48" transform="translate(956.104 581)"/>
+        <path id="直线_49" d="M0 0h4.146" class="cls-4" data-name="直线 49" transform="translate(956.104 584.357)"/>
+        <path id="路径_17609" d="M-1350.193 865.706a.216.216 0 0 1-.068.06l-2.995 1.8a.278.278 0 0 1-.357-.054.214.214 0 0 1-.047-.108v-3.591a.248.248 0 0 1 .276-.2.267.267 0 0 1 .128.042l2.995 1.795a.179.179 0 0 1 .068.256z" class="cls-5" data-name="路径 17609" transform="translate(2300.66 -284.604)"/>
+    </g>
+</svg>

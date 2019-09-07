@@ -32,6 +32,8 @@ class Controller {
         this.initHighlights();
         this.initVolumeButton();
         this.initSimpleDanmaku();
+        this.initClip();
+        this.initTheater();
     }
 
     initPlayButton () {
@@ -247,6 +249,24 @@ class Controller {
                 this.player.events.trigger('screenshot', dataURL);
             });
         }
+    }
+
+    initClip () {
+        if (!this.player.options.clip) {
+            return;
+        }
+        this.player.template.clipButton.addEventListener('click', () => {
+            this.player.events.trigger('clip');
+        });
+    }
+
+    initTheater () {
+        if (!this.player.options.theater) {
+            return;
+        }
+        this.player.template.theaterToggle.addEventListener('click', () => {
+            this.player.events.trigger('theater_toggle');
+        });
     }
 
     initSimpleDanmaku () {

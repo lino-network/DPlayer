@@ -31,9 +31,13 @@
         danmaku: true,
         simpleDanmaku: true,
         showSettingBtn: false,
+        clip: true,
+        theater: true,
     });
     window.dp1.danmaku.speed = 10;
     window.dp1.danmaku.draw({text:"123124343434343", type:"right", color:"#fff"});
+    window.dp1.on('clip', function() {console.log('clip clicked')})
+    window.dp1.on('theater_toggle', function() { console.log('theater clicked')})
     </script>
 </body>
 

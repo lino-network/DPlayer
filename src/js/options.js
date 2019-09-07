@@ -23,6 +23,8 @@ export default (options) => {
         showSettingBtn: true,
         nativeMute: false,
         simpleDanmaku: false,
+        clip: false,
+        theater: false,
     };
     for (const defaultKey in defaultOption) {
         if (defaultOption.hasOwnProperty(defaultKey) && !options.hasOwnProperty(defaultKey)) {
