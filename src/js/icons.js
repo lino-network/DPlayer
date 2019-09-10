@@ -15,6 +15,7 @@ import camera from '../assets/camera.svg';
 import subtitle from '../assets/subtitle.svg';
 import loading from '../assets/loading.svg';
 import clip from '../assets/clip.svg';
+import theater from '../assets/theater.svg';
 
 const Icons = {
     play: play,
@@ -34,7 +35,7 @@ const Icons = {
     subtitle: subtitle,
     loading: loading,
     clip: clip,
-    theater: fullWeb,
+    theater: theater,
 };
 
 export default Icons;

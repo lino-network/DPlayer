@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="21" height="16" viewBox="0 0 21 16">
+  <g id="theater_mode_icon" data-name="theater mode icon" transform="translate(-942.75 -573.75)">
+    <g id="矩形_2895" data-name="矩形 2895" transform="translate(942.75 573.75)" fill="none" stroke="#fff" stroke-width="1.5">
+      <rect width="21" height="16" rx="2" stroke="none"/>
+      <rect x="0.75" y="0.75" width="19.5" height="14.5" rx="1.25" fill="none"/>
+    </g>
+    <line id="直线_46" data-name="直线 46" y2="16" transform="translate(957.75 573.75)" fill="none" stroke="#fff" stroke-width="1.5"/>
+  </g>
+</svg>

@@ -104,24 +104,6 @@
         {{ /if }}
     </div>
     <div class="dplayer-icons dplayer-icons-right">
-        {{ if options.clip }}
-        <div class="dplayer-clip-btn">
-            <button class="dplayer-icon dplayer-clip-icon"
-              data-balloon="{{ tran('clip') }}" data-balloon-pos="up">
-                <span class="dplayer-icon-content">{{@ icons.clip }}</span>
-            </button>
-        </div>
-        {{ /if }}
-
-        {{ if options.simpleDanmaku }}
-        <div class="dplayer-simple-danmaku-toggle-btn">
-            <button class="dplayer-icon dplayer-simple-danmaku-toggle-icon"
-              data-balloon="{{ tran('Hide Danmaku') }}" data-balloon-pos="up">
-                <span class="dplayer-icon-content">{{@ icons.subtitle }}</span>
-            </button>
-        </div>
-        {{ /if }}
-
         {{ if options.video.quality }}
         <div class="dplayer-quality">
             <button class="dplayer-icon dplayer-quality-icon">{{ options.video.quality[options.video.defaultQuality].name }}</button>
@@ -139,6 +121,27 @@
             <span class="dplayer-icon-content">{{@ icons.camera }}</span>
         </div>
         {{ /if }}
+
+        {{ if options.simpleDanmaku }}
+        <div class="dplayer-simple-danmaku-toggle-btn">
+            <button class="dplayer-icon dplayer-simple-danmaku-toggle-icon"
+              data-balloon="{{ tran('Hide Danmaku') }}" data-balloon-pos="up">
+                <span class="dplayer-icon-content">{{@ icons.subtitle }}</span>
+            </button>
+        </div>
+        {{ /if }}
+
+        {{ if options.clip }}
+        <div class="dplayer-clip-btn">
+            <button class="dplayer-icon dplayer-clip-icon"
+              style="padding:10px"
+              data-balloon="{{ tran('Clip') }}" data-balloon-pos="up">
+                <span class="dplayer-icon-content">{{@ icons.clip }}</span>
+            </button>
+        </div>
+        {{ /if }}
+
+
 
         <div class="dplayer-comment">
             <button class="dplayer-icon dplayer-comment-icon" data-balloon="{{ tran('Send danmaku') }}" data-balloon-pos="up">
@@ -224,7 +227,8 @@
         {{ if options.theater }}
         <div class="dplayer-theater-btn">
             <button class="dplayer-icon dplayer-theater-icon"
-              data-balloon="{{ tran('theater') }}" data-balloon-pos="up">
+              style="padding:9px;"
+              data-balloon="{{ tran('Theater Mode') }}" data-balloon-pos="up">
                 <span class="dplayer-icon-content">{{@ icons.theater }}</span>
             </button>
         </div>

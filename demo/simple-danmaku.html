@@ -23,7 +23,17 @@
     window.dp1 = new DPlayer({
         container: document.getElementById('dplayer-simple'),
         video: {
-          url: 'http://static.smartisanos.cn/common/video/t1-ui.mp4',
+        quality: [{
+            name: 'HD',
+            url: 'http://static.smartisanos.cn/common/video/t1-ui.mp4',
+            type: 'hls'
+        }, {
+            name: 'SD',
+            url: 'http://static.smartisanos.cn/common/video/t1-ui.mp4',
+            type: 'normal'
+        }],
+defaultQuality: 0,
+          //url: 'http://static.smartisanos.cn/common/video/t1-ui.mp4',
           pic: 'http://static.smartisanos.cn/pr/img/video/video_03_cc87ce5bdb.jpg',
           thumbnails: 'http://static.smartisanos.cn/pr/img/video/video_03_cc87ce5bdb.jpg'
         },
