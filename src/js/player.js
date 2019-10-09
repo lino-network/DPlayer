@@ -93,6 +93,7 @@ class DPlayer {
         this.adsActive = false;
         this.autoplayAllowed = false;
         this.autoplayRequiresMuted = false;
+        this.container.classList.add('dplayer-ads-inactive');
 
         this.adscontroller = new AdsController(this);
 
