@@ -222,10 +222,9 @@ class DPlayer {
      * kicking ads
      */
     runAds (adsTagURL) {
-        if (!this.options.ads.enabled) {
+        if (!this.options.ads.enabled || !this.ads.canRun()) {
             return;
         }
-
         this.ads.reset();
         this.ads.initialUserAction();
         this.ads.requestAds(adsTagURL, this.autoplayAllowed, this.autoplayRequiresMuted);
@@ -292,14 +291,12 @@ class DPlayer {
 
         this.template.playButton.innerHTML = Icons.pause;
 
-        if (this.options.ads.enabled && this.options.ads.preRoll && !this.shownPreRoll) {
+        if (this.options.ads.enabled && this.options.ads.preRoll && !this.shownPreRoll && this.ads.canRun()) {
             this.runAds(this.options.ads.ima.prerollAdsTagURL);
             this.shownPreRoll = true;
             if (this.options.live) {
                 this.video.muted();
                 this.video.play();
-            } else {
-                this.mute();
             }
         } else {
             const playedPromise = Promise.resolve(this.video.play());

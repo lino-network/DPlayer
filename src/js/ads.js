@@ -1,6 +1,13 @@
 import Icons from './icons';
 import utils from './utils';
 
+const State = {
+    UNKNOWN: 'Ads.Unknown',
+    UNAVAILABLE: 'Ads.Invalid',
+    READY:  'Ads.Ready',
+    DISABLED: 'Ads.Disabled',
+};
+
 class Ads {
     constructor (options, template, player, adContainer) {
         this.options = options;
@@ -8,14 +15,28 @@ class Ads {
         this.adContainer = adContainer;
         this.template = template;
         this.paused = true;
+        this.AdsState = State;
+        this.state = State.UNKNOWN;
+
         if (!options.ads.enabled) {
+            this.state = State.DISABLED;
+            return;
+        }
+
+        if (google === undefined) {
+            this.state = State.UNAVAILABLE;
             return;
         }
 
         this.initIMA();
+        this.state = State.READY;
     }
 
     initIMA () {
+        google.ima.settings.setLocale(this.options.lang);
+
+        google.ima.settings.setDisableCustomPlaybackForIOS10Plus(true);
+
         this.adDisplayContainer = new google.ima.AdDisplayContainer(this.adContainer, this.player.video);
 
         this.adsLoader = new google.ima.AdsLoader(this.adDisplayContainer);
@@ -33,6 +54,10 @@ class Ads {
             this.onAdError,
             false,
             this);
+    }
+
+    canRun () {
+        return this.options.ads.enabled && this.state === State.READY;
     }
 
     reset () {
