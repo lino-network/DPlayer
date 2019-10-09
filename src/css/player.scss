@@ -111,6 +111,30 @@
         }
     }
 
+    &.dplayer-ads-active {
+        .dplayer-ads-controller-mask,
+        .dplayer-ads-controller,
+        .dplayer-ads {
+            display: block;
+        }
+        .dplayer-controller-mask,
+        .dplayer-controller {
+            display: none;
+        }
+    }
+
+    &.dplayer-ads-inactive {
+        .dplayer-ads-controller-mask,
+        .dplayer-ads-controller,
+        .dplayer-ads {
+            display: none;
+        }
+        .dplayer-controller-mask,
+        .dplayer-controller {
+            display: block;
+        }
+    }
+
     &.dplayer-arrow {
         .dplayer-danmaku {
             font-size: 18px
@@ -233,4 +257,12 @@
     left: 0;
     margin: 0;
     padding: 0;
+}
+
+.dplayer-ads {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
 }

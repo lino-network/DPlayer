@@ -25,6 +25,9 @@ export default (options) => {
         simpleDanmaku: false,
         clip: false,
         theater: false,
+        ads: {
+            enabled: false,
+        },
     };
     for (const defaultKey in defaultOption) {
         if (defaultOption.hasOwnProperty(defaultKey) && !options.hasOwnProperty(defaultKey)) {

@@ -196,21 +196,9 @@ class Controller {
         });
         this.player.template.volumeButtonIcon.addEventListener('click', () => {
             if (this.player.video.muted) {
-                this.player.video.muted = false;
-                // TODO(yumin): add nostore option.
-                this.player.user.set('muted', false);
-                this.player.switchVolumeIcon();
-                this.player.bar.set('volume', this.player.volume(), 'width');
-                if (utils.isMobile) {
-                    this.player.volume(1, false, true);
-                }
-            }
-            else {
-                this.player.video.muted = true;
-                // TODO(yumin): add nostore option.
-                this.player.user.set('muted', true);
-                this.player.template.volumeIcon.innerHTML = Icons.volumeOff;
-                this.player.bar.set('volume', 0, 'width');
+                this.player.unmute();
+            } else {
+                this.player.mute();
             }
         });
     }
@@ -284,7 +272,6 @@ class Controller {
             this.player.danmaku.show();
         };
         const showDanmaku = this.player.user.get('danmaku');
-        console.log(showDanmaku);
         if (!showDanmaku) {
             this.player.template.simpleDanmakuToggle.dataset.balloon = this.player.tran('Show Danmaku');
             this.player.template.simpleDanmakuToggleInner.style.opacity = '0.4';

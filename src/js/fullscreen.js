@@ -4,6 +4,9 @@ class FullScreen {
     constructor (player) {
         this.player = player;
 
+        this.fullscreenWidth = undefined;
+        this.fullscreenHeight = undefined;
+
         this.player.events.on('webfullscreen', () => {
             this.player.resize();
         });
@@ -13,6 +16,10 @@ class FullScreen {
         });
 
         const fullscreenchange = () => {
+            if (this.isFullScreen()) {
+                this.fullscreenWidth = window.screen.width;
+                this.fullscreenHeight = window.screen.height;
+            }
             this.player.resize();
             if (this.isFullScreen('browser')) {
                 this.player.events.trigger('fullscreen');
