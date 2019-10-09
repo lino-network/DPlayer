@@ -23,7 +23,7 @@ class Ads {
             return;
         }
 
-        if (google === undefined) {
+        if (typeof google === 'undefined') {
             this.state = State.UNAVAILABLE;
             return;
         }
