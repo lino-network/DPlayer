@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>DPlayer Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <link rel="stylesheet" href="demo.css">
+    <link rel="stylesheet" href="/dist/DPlayer.min.css">
+    <script src="https://imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+    <script src="/dist/DPlayer.min.js"></script>
+</head>
+
+<body class="markdown-body">
+
+    <h2 id="simple">Simple Danmaku</h2>
+    <div class="example">
+        <div id="dplayer-simple"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/stats.js"></script>
+    <script>
+    window.dp1 = new DPlayer({
+        container: document.getElementById('dplayer-simple'),
+        video: {
+            quality: [{
+                name: 'HD',
+                url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
+                type: 'auto'
+            }],
+            defaultQuality: 0,
+            url: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4',
+            pic: 'http://static.smartisanos.cn/pr/img/video/video_03_cc87ce5bdb.jpg',
+            thumbnails: 'http://static.smartisanos.cn/pr/img/video/video_03_cc87ce5bdb.jpg'
+        },
+        autoplay: true,
+        live: false,
+        clip: true,
+        theater: true,
+        ads: {
+            enabled: true,
+            preRoll: true,
+            ima: {
+                prerollAdsTagURL: 'https://pubads.g.doubleclick.net/gampad/ads?' +
+      'sz=640x480&iu=/124319096/external/single_ad_samples&ciu_szs=300x250&' +
+      'impl=s&gdfp_req=1&env=vp&output=vast&unviewed_position_start=1&' +
+      'cust_params=deployment%3Ddevsite%26sample_ct%3Dskippablelinear&' +
+      'correlator=',
+            },
+        },
+    });
+    window.dp1.on('clip', function() {console.log('clip clicked')})
+    window.dp1.on('theater_toggle', function() { console.log('theater clicked')})
+    </script>
+</body>
+
+</html>
