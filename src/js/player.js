@@ -277,7 +277,9 @@ class DPlayer {
     }
 
     onMutedAutoplayFailed () {
-        this.unmute();
+        this.autoplayAllowed = false;
+        this.autoplayRequiresMuted = true;
+        this.mute();
         this.pause();
     }
 
@@ -295,10 +297,6 @@ class DPlayer {
         if (this.options.ads.enabled && this.options.ads.preRoll && !this.shownPreRoll && this.ads.canRun()) {
             this.runAds(this.options.ads.ima.prerollAdsTagURL);
             this.shownPreRoll = true;
-            if (this.options.live) {
-                this.video.muted = true;
-                this.video.play();
-            }
         } else {
             const playedPromise = Promise.resolve(this.video.play());
             playedPromise.catch(() => {
