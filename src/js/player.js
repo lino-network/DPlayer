@@ -296,7 +296,7 @@ class DPlayer {
             this.runAds(this.options.ads.ima.prerollAdsTagURL);
             this.shownPreRoll = true;
             if (this.options.live) {
-                this.video.muted();
+                this.video.muted = true;
                 this.video.play();
             }
         } else {
