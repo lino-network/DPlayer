@@ -8,7 +8,6 @@ class AdsController {
         this.initPlayButton();
         this.initFullButton();
         this.initVolumeButton();
-        this.initTheater();
     }
 
     initPlayButton () {
@@ -53,15 +52,6 @@ class AdsController {
             } else {
                 this.player.mute();
             }
-        });
-    }
-
-    initTheater () {
-        if (!this.player.options.theater) {
-            return;
-        }
-        this.player.adsTemplate.theaterToggle.addEventListener('click', () => {
-            this.player.events.trigger('theater_toggle');
         });
     }
 }

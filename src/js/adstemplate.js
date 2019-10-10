@@ -23,7 +23,6 @@ class AdsTemplate {
         this.volumeIcon = this.container.querySelector('.dplayer-ads-volume-icon .dplayer-icon-content');
         this.ptime = this.container.querySelector('.dplayer-ads-ptime');
         this.dtime = this.container.querySelector('.dplayer-ads-dtime');
-        this.theaterToggle = this.container.querySelector('.dplayer-ads-theater-icon');
         this.browserFullButton = this.container.querySelector('.dplayer-ads-full-icon');
         this.webFullButton = this.container.querySelector('.dplayer-ads-full-in-icon');
     }
