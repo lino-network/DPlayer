@@ -23,15 +23,6 @@
         </span>
     </div>
     <div class="dplayer-icons dplayer-icons-right">
-        {{ if options.theater }}
-        <div class="dplayer-ads-theater-btn">
-            <button class="dplayer-icon dplayer-ads-theater-icon"
-              style="padding:9px;"
-              data-balloon="{{ tran('Theater Mode') }}" data-balloon-pos="up">
-                <span class="dplayer-icon-content">{{@ icons.theater }}</span>
-            </button>
-        </div>
-        {{ /if }}
         <div class="dplayer-ads-full">
             <button class="dplayer-icon dplayer-ads-full-icon" data-balloon="{{ tran('Full screen') }}" data-balloon-pos="up">
                 <span class="dplayer-icon-content">{{@ icons.full }}</span>
