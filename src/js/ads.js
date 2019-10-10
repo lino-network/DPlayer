@@ -136,6 +136,8 @@ class Ads {
         // Get the ads manager.
         const adsRenderingSettings = new google.ima.AdsRenderingSettings();
         adsRenderingSettings.restoreCustomPlaybackStateOnAdBreakComplete = true;
+        adsRenderingSettings.enablePreloading = true;
+        adsRenderingSettings.loadVideoTimeout = 4000; // 4s video timeout
 
         this.adsManager = adsManagerLoadedEvent.getAdsManager(this.player.video, adsRenderingSettings);
         this.setupAdsManager(this.adsManager);
