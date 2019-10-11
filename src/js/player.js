@@ -295,7 +295,7 @@ class DPlayer {
         this.template.playButton.innerHTML = Icons.pause;
 
         if (this.options.ads.enabled && this.options.ads.preRoll && !this.shownPreRoll && this.ads.canRun()) {
-            this.runAds(this.options.ads.ima.prerollAdsTagURL);
+            this.runAds(this.options.ads.adsTag);
             this.shownPreRoll = true;
         } else {
             const playedPromise = Promise.resolve(this.video.play());
