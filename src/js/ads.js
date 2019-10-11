@@ -18,6 +18,14 @@ class Ads {
         this.AdsState = State;
         this.state = State.UNKNOWN;
 
+        this.resizeCheckIntervalHandle = null;
+        this.resizeCheckInterval = 200; // Interval (ms) to check for player resize for fluid support.
+
+        this.playerDimensions = {
+            width: this.player.video.clientWidth,
+            height: this.player.video.clientHeight,
+        };
+
         if (!options.ads.enabled) {
             this.state = State.DISABLED;
             return;
@@ -207,6 +215,7 @@ class Ads {
     onContentPauseRequested () {
         this.adsPaused = false;
         this.player.pauseForAd();
+        this.setUpPlayerIntervals();
     }
 
     /**
@@ -215,6 +224,7 @@ class Ads {
      */
     onContentResumeRequested () {
         this.adsPaused = true;
+        this.clearPlayerIntervals();
         this.player.resumeAfterAd();
     }
 
@@ -234,6 +244,31 @@ class Ads {
             break;
         }
         }
+    }
+
+    setUpPlayerIntervals () {
+        this.resizeCheckIntervalHandle = setInterval(this.checkForResize.bind(this), this.resizeCheckInterval);
+    }
+
+    clearPlayerIntervals () {
+        clearInterval(this.resizeCheckIntervalHandle);
+    }
+
+    checkForResize () {
+        const currentWidth = this.player.video.clientWidth;
+        const currentHeight = this.player.video.clientHeight;
+
+        if (currentWidth !== this.playerDimensions.width ||
+            currentHeight !== this.playerDimensions.height) {
+            const isFullScreen = this.player.fullScreen.isFullScreen('browser');
+            this.playerDimensions.width = currentWidth;
+            this.playerDimensions.height = currentHeight;
+            this.resize(currentWidth, currentHeight, isFullScreen);
+        }
+    }
+
+    destroy () {
+        this.clearPlayerIntervals();
     }
 }
 
