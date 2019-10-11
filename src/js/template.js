@@ -23,6 +23,11 @@ class Template {
                 preload: this.options.preload,
                 url: this.options.video.url,
                 subtitle: this.options.subtitle,
+            },
+            ads: {
+                options: this.options,
+                icons: Icons,
+                tran: this.tran,
             }
         });
 
@@ -45,6 +50,7 @@ class Template {
         this.videoWrap = this.container.querySelector('.dplayer-video-wrap');
         this.controllerMask = this.container.querySelector('.dplayer-controller-mask');
         this.ptime = this.container.querySelector('.dplayer-ptime');
+        this.dtime = this.container.querySelector('.dplayer-dtime');
         this.settingButton = this.container.querySelector('.dplayer-setting-icon');
         this.settingBox = this.container.querySelector('.dplayer-setting-box');
         this.mask = this.container.querySelector('.dplayer-mask');
@@ -62,7 +68,6 @@ class Template {
         this.danmakuOpacityBox = this.container.querySelector('.dplayer-setting-danmaku');
         this.simpleDanmakuToggle = this.container.querySelector('.dplayer-simple-danmaku-toggle-icon');
         this.simpleDanmakuToggleInner = this.container.querySelector('.dplayer-simple-danmaku-toggle-icon .dplayer-icon-content');
-        this.dtime = this.container.querySelector('.dplayer-dtime');
         this.controller = this.container.querySelector('.dplayer-controller');
         this.commentInput = this.container.querySelector('.dplayer-comment-input');
         this.commentButton = this.container.querySelector('.dplayer-comment-icon');

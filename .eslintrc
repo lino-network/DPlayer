@@ -59,6 +59,7 @@
         "Hls": false,
         "flvjs": false,
         "dashjs": false,
-        "WebTorrent": false
+        "WebTorrent": false,
+        "google": false,
     }
 }

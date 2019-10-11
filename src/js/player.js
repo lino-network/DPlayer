@@ -4,6 +4,7 @@ import utils from './utils';
 import handleOption from './options';
 import i18n from './i18n';
 import Template from './template';
+import AdsTemplate from './adstemplate';
 import Icons from './icons';
 import Danmaku from './danmaku';
 import LiveDanmaku from './livedanmaku';
@@ -15,12 +16,14 @@ import Bar from './bar';
 import Timer from './timer';
 import Bezel from './bezel';
 import Controller from './controller';
+import AdsController from './adscontroller';
 import Setting from './setting';
 import Comment from './comment';
 import HotKey from './hotkey';
 import ContextMenu from './contextmenu';
 import InfoPanel from './info-panel';
 import tplVideo from '../template/video.art';
+import Ads from './ads';
 
 let index = 0;
 const instances = [];
@@ -44,7 +47,6 @@ class DPlayer {
         this.events = new Events();
         this.user = new User(this);
         this.container = this.options.container;
-
         this.container.classList.add('dplayer');
         if (!this.options.danmaku) {
             this.container.classList.add('dplayer-no-danmaku');
@@ -69,17 +71,33 @@ class DPlayer {
             index: index,
             tran: this.tran,
         });
+        this.adsTemplate = new AdsTemplate({
+            container: this.container,
+            options: this.options,
+        });
 
+        this.adsContainer = this.adsTemplate.adsContainer;
         this.video = this.template.video;
         this.gifts = this.template.gifts;
 
         this.bar = new Bar(this.template);
+        this.adsBar = new Bar(this.adsTemplate);
 
         this.bezel = new Bezel(this.template.bezel);
 
         this.fullScreen = new FullScreen(this);
 
         this.controller = new Controller(this);
+
+        this.ads = new Ads(this.options, this.adsTemplate, this, this.adsContainer);
+        this.adsActive = false;
+        this.autoplayAllowed = false;
+        this.autoplayRequiresMuted = false;
+        this.container.classList.add('dplayer-ads-inactive');
+
+        this.adscontroller = new AdsController(this);
+
+        this.shownPreRoll = false;
 
         if (this.options.danmaku) {
             if (this.options.live) {
@@ -91,7 +109,7 @@ class DPlayer {
                         setTimeout(() => {
                             // autoplay
                             if (this.options.autoplay) {
-                                this.play();
+                                this.autoplay();
                             }
                         }, 0);
                     },
@@ -114,7 +132,7 @@ class DPlayer {
 
                             // autoplay
                             if (this.options.autoplay) {
-                                this.play();
+                                this.autoplay();
                             }
                         }, 0);
                     },
@@ -165,10 +183,10 @@ class DPlayer {
         if (!this.danmaku && this.options.autoplay) {
             if (this.type === 'hls') {
                 this.video.addEventListener('loadedmetadata', () => {
-                    this.video.play();
+                    this.autoplay();
                 });
             } else {
-                this.play();
+                this.autoplay();
             }
         }
 
@@ -202,7 +220,71 @@ class DPlayer {
     }
 
     /**
-     * Play video
+     * kicking ads
+     */
+    runAds (adsTagURL) {
+        if (!this.options.ads.enabled || !this.ads.canRun()) {
+            return;
+        }
+        this.ads.reset();
+        this.ads.initialUserAction();
+        this.ads.requestAds(adsTagURL, this.autoplayAllowed, this.autoplayRequiresMuted);
+    }
+
+    /**
+     * Auto play video - None user triggered interaction
+     */
+    autoplay () {
+        const volume = this.user.get('volume');
+        // check auto play with sound first
+        if (this.options.nativeMute || this.user.get('muted') || volume === 0) {
+            this.checkAutoplayWithoutSound();
+        } else {
+            this.video.volume = volume;
+            this.video.muted = false;
+            const playedPromise = Promise.resolve(this.video.play());
+            playedPromise.then(() => {
+                this.autoplayWithSoundSuccess();
+            }).catch(() => {
+                this.checkAutoplayWithoutSound();
+            });
+        }
+    }
+
+    autoplayWithSoundSuccess () {
+        this.autoplayAllowed = true;
+        this.autoplayRequiresMuted = false;
+        this.unmute();
+        this.play();
+    }
+
+    checkAutoplayWithoutSound () {
+        this.video.volume = 0;
+        this.video.muted = true;
+        const playedPromise = Promise.resolve(this.video.play());
+        playedPromise.then(() => {
+            this.onMutedAutoplaySuccess();
+        }).catch(() => {
+            this.onMutedAutoplayFailed();
+        });
+    }
+
+    onMutedAutoplaySuccess () {
+        this.autoplayAllowed = true;
+        this.autoplayRequiresMuted = true;
+        this.mute();
+        this.play();
+    }
+
+    onMutedAutoplayFailed () {
+        this.autoplayAllowed = false;
+        this.autoplayRequiresMuted = true;
+        this.mute();
+        this.pause();
+    }
+
+    /**
+     * Play video - User triggered interaction
      */
     play () {
         this.paused = false;
@@ -212,11 +294,17 @@ class DPlayer {
 
         this.template.playButton.innerHTML = Icons.pause;
 
-        const playedPromise = Promise.resolve(this.video.play());
-        playedPromise.catch(() => {
-            this.pause();
-        }).then(() => {
-        });
+        if (this.options.ads.enabled && this.options.ads.preRoll && !this.shownPreRoll && this.ads.canRun()) {
+            this.runAds(this.options.ads.adsTag);
+            this.shownPreRoll = true;
+        } else {
+            const playedPromise = Promise.resolve(this.video.play());
+            playedPromise.catch(() => {
+                this.pause();
+            }).then(() => {
+            });
+        }
+
         this.timer.enable('loading');
         this.container.classList.remove('dplayer-paused');
         this.container.classList.add('dplayer-playing');
@@ -253,15 +341,85 @@ class DPlayer {
         }
     }
 
+    /**
+     * Ads about to play, pause video to play ads
+     */
+    pauseForAd () {
+        // set playing
+        this.adsActive = true;
+        this.adsTemplate.playButton.innerHTML = Icons.pause;
+
+        // pause video
+        this.pause();
+        this.timer.disable('loading');
+        this.container.classList.remove('dplayer-paused');
+        this.container.classList.add('dplayer-playing');
+        if (this.danmaku) {
+            this.danmaku.pause();
+        }
+        this.container.classList.add('dplayer-ads-active');
+        this.container.classList.remove('dplayer-ads-inactive');
+    }
+
+    /**
+     * Ads finished playiing, resume video
+     */
+    resumeAfterAd () {
+        this.adsActive = false;
+        this.container.classList.add('dplayer-ads-inactive');
+        this.container.classList.remove('dplayer-ads-active');
+
+        this.play();
+    }
+
     switchVolumeIcon () {
         if (this.volume() >= 0.95) {
             this.template.volumeIcon.innerHTML = Icons.volumeUp;
+            this.adsTemplate.volumeIcon.innerHTML = Icons.volumeUp;
         }
         else if (this.volume() > 0) {
             this.template.volumeIcon.innerHTML = Icons.volumeDown;
+            this.adsTemplate.volumeIcon.innerHTML = Icons.volumeDown;
         }
         else {
             this.template.volumeIcon.innerHTML = Icons.volumeOff;
+            this.adsTemplate.volumeIcon.innerHTML = Icons.volumeOff;
+        }
+    }
+
+    /**
+     * mute video
+     */
+    mute () {
+        this.video.muted = true;
+        // TODO(yumin): add nostore option.
+        this.user.set('muted', true);
+        this.template.volumeIcon.innerHTML = Icons.volumeOff;
+        this.adsTemplate.volumeIcon.innerHTML = Icons.volumeOff;
+        this.bar.set('volume', 0, 'width');
+        this.adsBar.set('volume', 0, 'width');
+        this.ads.setVolume(0);
+    }
+
+    /**
+     * unmute video
+     */
+    unmute () {
+        this.video.muted = false;
+        // TODO(yumin): add nostore option.
+        this.user.set('muted', false);
+        this.switchVolumeIcon();
+        const v = this.volume();
+        if (v > 0) {
+            this.bar.set('volume', v, 'width');
+            this.adsBar.set('volume', v, 'width');
+            this.volume(v, false, true);
+            this.ads.setVolume(v);
+        } else {
+            this.bar.set('volume', 0.5, 'width');
+            this.adsBar.set('volume', 0.5, 'width');
+            this.volume(0.5, false, true);
+            this.ads.setVolume(0.5);
         }
     }
 
@@ -274,8 +432,10 @@ class DPlayer {
             percentage = Math.max(percentage, 0);
             percentage = Math.min(percentage, 1);
             this.bar.set('volume', percentage, 'width');
+            this.adsBar.set('volume', percentage, 'width');
             const formatPercentage = `${(percentage * 100).toFixed(0)}%`;
             this.template.volumeBarWrapWrap.dataset.balloon = formatPercentage;
+            this.adsTemplate.volumeBarWrapWrap.dataset.balloon = formatPercentage;
             if (!nostorage) {
                 this.user.set('volume', percentage);
             }
@@ -293,9 +453,9 @@ class DPlayer {
 
             // set volume
             this.video.volume = percentage;
+            this.ads.setVolume(percentage);
             this.switchVolumeIcon();
         }
-
         return this.video.volume;
     }
 
@@ -674,6 +834,14 @@ class DPlayer {
         if (this.controller.thumbnails) {
             this.controller.thumbnails.resize(160, this.video.videoHeight / this.video.videoWidth * 160, this.template.barWrap.offsetWidth);
         }
+
+        if (this.adsActive) {
+            const isFullScreen = this.fullScreen.isFullScreen('browser');
+            const w = isFullScreen ? this.fullScreen.fullscreenWidth : this.video.clientWidth;
+            const h = isFullScreen ? this.fullScreen.fullscreenHeight : this.video.clientHeight;
+            this.ads.resize(w, h, isFullScreen);
+        }
+
         this.events.trigger('resize');
     }
 
@@ -689,6 +857,7 @@ class DPlayer {
         this.video.src = '';
         this.container.innerHTML = '';
         this.events.trigger('destroy');
+        this.ads.destroy();
     }
 
     static get version () {
