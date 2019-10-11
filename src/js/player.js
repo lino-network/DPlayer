@@ -857,6 +857,7 @@ class DPlayer {
         this.video.src = '';
         this.container.innerHTML = '';
         this.events.trigger('destroy');
+        this.ads.destroy();
     }
 
     static get version () {
