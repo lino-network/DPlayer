@@ -243,6 +243,14 @@ class Ads {
             }
             break;
         }
+        case google.ima.AdEvent.Type.COMPLETE: {
+            console.log('ad COMPLETE:',ad)
+            break;
+        }
+        case google.ima.AdEvent.Type.SKIPPED: {
+            console.log('ad SKIPPED:',ad)
+            break;
+        }
         }
     }
 
