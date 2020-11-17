@@ -22,6 +22,9 @@ class Events {
             'subtitle_show', 'subtitle_hide', 'subtitle_change',
             'clip', 'theater_toggle'
         ];
+        this.adsEvents = [
+            'adCompleted'
+        ]
     }
 
     on (name, callback) {
@@ -47,6 +50,9 @@ class Events {
         }
         else if (this.videoEvents.indexOf(name) !== -1) {
             return 'video';
+        }
+        else if (this.adsEvents.indexOf(name) !== -1) {
+            return 'ads';
         }
 
         console.error(`Unknown event name: ${name}`);

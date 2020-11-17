@@ -230,7 +230,12 @@ class DPlayer {
         this.ads.initialUserAction();
         this.ads.requestAds(adsTagURL, this.autoplayAllowed, this.autoplayRequiresMuted);
     }
-
+    /**
+     * completed ads
+     */    
+    adCompleted (){
+        this.events.trigger('adCompleted');
+    }
     /**
      * Auto play video - None user triggered interaction
      */
